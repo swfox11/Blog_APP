@@ -22,7 +22,7 @@ let posts = [];
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-//Write your code here//
+
 
 //CHALLENGE 1: GET All posts
 await db.connect();
@@ -33,10 +33,11 @@ async function loadAgain(params) {
 }
 
 app.get("/posts", async (req, res) => {
+  await db.query("CREATE TABLE record(id SERIAL ,title TEXT,content TEXT,author TEXT,Time TIMESTAMPTZ);");
   await loadAgain();
   res.json(posts);
 });
-//CHALLENGE 2: GET a specific post by id
+
 app.get("/posts/:id", async (req, res) => {
   try {
     const id = parseInt(req.params.id);
@@ -52,7 +53,7 @@ app.get("/posts/:id", async (req, res) => {
     console.log(error);
   }
 });
-//CHALLENGE 3: POST a new post
+
 app.post("/posts", async (req, res) => {
   try {
     await db.query(
@@ -67,7 +68,7 @@ app.post("/posts", async (req, res) => {
     console.log(error);
   }
 });
-//CHALLENGE 4: PATCH a post when you just want to update one parameter
+
 app.patch("/posts/:id", async (req, res) => {
   try {
     const id = parseInt(req.params.id);
@@ -94,7 +95,8 @@ app.patch("/posts/:id", async (req, res) => {
   }
   
 });
-//CHALLENGE 5: DELETE a specific post by providing the post id.
+
+
 app.delete("/posts/:id", async(req, res) => {
   try {
     const id = parseInt(req.params.id);
