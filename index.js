@@ -33,6 +33,7 @@ async function loadAgain(params) {
 }
 
 app.get("/posts", async (req, res) => {
+  console.log("reached here");
   await db.query("CREATE TABLE record(id SERIAL ,title TEXT,content TEXT,author TEXT,Time TIMESTAMPTZ);");
   await loadAgain();
   res.json(posts);
